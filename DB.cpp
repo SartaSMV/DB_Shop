@@ -1,5 +1,6 @@
 #include "DB.h"
 
+// цэ конструктор
 DB::DB()
 {
 	// Получаем дескриптор соединения
@@ -8,7 +9,7 @@ DB::DB()
 	{
 		// Если дескриптор не получен – выводим сообщение об ошибке
 		fprintf(stderr, "Error: can'tcreate MySQL-descriptor\n");
-		//exit(1); //Если используется оконное приложение
+		// exit(1); //Если используется оконное приложение
 	}
 	if (!mysql_real_connect(conn, host, login, password, db, NULL, NULL, 0))
 	{
@@ -27,13 +28,13 @@ DB::DB()
 void DB::query(string query)
 {
 	//Делаем запрос к таблице
-	if(mysql_query(conn, query.c_str()))
+	if (mysql_query(conn, query.c_str()))
 	{
 		fprintf(stderr, "%s\n", mysql_error(conn));
 	}
 }
 
-MYSQL_RES* DB::result()
+MYSQL_RES *DB::result()
 {
 	return mysql_store_result(conn);
 }
