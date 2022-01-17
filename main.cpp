@@ -3,6 +3,7 @@
 #include<mysql.h>
 
 #include "DB.h"
+#include "ShopDB.h"
 
 using namespace std;
 
@@ -11,20 +12,15 @@ int main(int argc, char** argv[])
 
 	system("cls");
 
-	DB db;
-	MYSQL_RES* res;
-	MYSQL_ROW row;
+	DB *db = new DB;
+	ShopDB shDB(db);
 
-	int i = 0;
+	vector<pair <int, int>> zzz;
 
-	db.query("SELECT Name FROM goods_storage");
+	zzz.push_back(pair<int, int>(4, 1));
+	zzz.push_back(pair<int, int>(1, 2));
 
-	res = db.result();
-	while (row = mysql_fetch_row(res)) {
-		for (i = 0; i < mysql_num_fields(res); i++) {
-			std::cout << row[i] << "\n"; //¬ыводим все что есть в базе через цикл
-		}
-	}
+	cout << shDB.checkBuy(zzz);
 
 	return 0;
 }

@@ -14,7 +14,7 @@ using std::string;
 class DB
 {
 private:
-	MYSQL* conn;
+	MYSQL* _conn;
 
 public:
 	DB();
