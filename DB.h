@@ -1,14 +1,12 @@
 #pragma once
 
-#include<conio.h>
-#include<stdlib.h>
-#include<stdio.h>
+#include<iostream>
 #include<string>
 
 #include <mysql.h>
 
-#include "option.h"
-
+using std::cout;
+using std::endl;
 using std::string;
 
 class DB
@@ -17,7 +15,7 @@ private:
 	MYSQL* _conn;
 
 public:
-	DB();
+	DB(string _host, string _login, string _password, string _db);
 
 	void query(string query);
 	MYSQL_RES *result();

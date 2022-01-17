@@ -1,35 +1,22 @@
 #include "DB.h"
 
-DB::DB()
+DB::DB(string _host, string _login, string _password, string _db)
 {
-	// Получаем дескриптор соединения
 	_conn = mysql_init(NULL);
-	if (_conn == NULL)
+	if (_conn == NULL) exit(1);
+	if (!mysql_real_connect(_conn, _host.c_str(), _login.c_str(), _password.c_str(), _db.c_str(), NULL, NULL, 0))
 	{
-		// Если дескриптор не получен – выводим сообщение об ошибке
-		fprintf(stderr, "Error: can'tcreate MySQL-descriptor\n");
-		//exit(1); //Если используется оконное приложение
-	}
-	if (!mysql_real_connect(_conn, host, login, password, db, NULL, NULL, 0))
-	{
-		// Если нет возможности установить соединение с сервером
-		// базы данных выводим сообщение об ошибке
-		fprintf(stderr, "Error: can'tconnecttodatabase %s\n", mysql_error(_conn));
-	}
-	else
-	{
-		// Если соединение успешно установлено выводим фразу - "Success!"
-		fprintf(stdout, "Success!\n");
+		cout << "Error: can'tconnecttodatabase " << mysql_error(_conn) << endl;
+		exit(2);
 	}
 	mysql_set_character_set(_conn, "utf8");
 }
 
 void DB::query(string query)
 {
-	//Делаем запрос к таблице
 	if(mysql_query(_conn, query.c_str()))
 	{
-		fprintf(stderr, "%s\n", mysql_error(_conn));
+		cout << mysql_error(_conn) << endl;
 	}
 }
 

@@ -5,7 +5,10 @@
 #include <string>
 #include <map>
 
+#include<mysql.h>
+
 #include "DB.h"
+
 
 using std::vector;
 using std::string;
@@ -18,11 +21,10 @@ private:
 	DB *_db;
 	
 public:
-	ShopDB();
 	ShopDB(DB* _db);
 
-	bool checkBuy(vector <pair<int, int>> ids);
-
+	vector <pair<int, int>> buy(vector <pair<int, int>> ids);
+	void update(vector <pair<int, int>> ids);
 
 	~ShopDB();
 };

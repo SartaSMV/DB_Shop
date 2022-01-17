@@ -6,12 +6,15 @@ ShopDB::ShopDB(DB* _db) :
 
 }
 
-bool ShopDB::checkBuy(vector <pair<int, int>> ids)
+vector <pair<int, int>> ShopDB::buy(vector <pair<int, int>> ids)
 {
     string query;
     MYSQL_RES* res;
     MYSQL_ROW row;
+
     map <int, int> buy, count;
+
+    vector <pair<int, int>> out;
 
     for (int i = 0; i < ids.size(); i++)
     {
@@ -53,12 +56,26 @@ bool ShopDB::checkBuy(vector <pair<int, int>> ids)
 
     for (auto i:count)
     {
-        if (buy[i.first] > i.second) return false;
+        out.push_back(pair<int, int> (i.first, i.second - buy[i.first]) );
     }
 
-    return true;
+    return out;
 }
 
+void ShopDB::update(vector <pair<int, int>> ids)
+{
+    string query;
+
+    for (int i = 0; i < ids.size(); i++)
+    {
+        query = "UPDATE goods_storage SET Count = " + std::to_string(ids[i].second) +
+            " WHERE ID_GS = " + std::to_string(ids[i].first) + ";";
+
+        _db->query(query);
+    }
+
+    return;
+}
 
 ShopDB::~ShopDB()
 {
