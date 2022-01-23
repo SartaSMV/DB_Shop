@@ -25,6 +25,7 @@ public:
 
 	vector <pair<int, int>> buy(vector <pair<int, int>> ids);
 	void update(vector <pair<int, int>> ids);
+	
 
 	~ShopDB();
 };
